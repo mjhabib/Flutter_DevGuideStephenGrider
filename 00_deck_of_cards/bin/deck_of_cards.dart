@@ -1,5 +1,6 @@
 void main() {
   var deck = Deck();
+  deck.shuffle();
   print(deck);
   // anytime we want to print out an instance of a class, if we call the toString function, we can print out any custom message we want
 }
@@ -21,6 +22,10 @@ class Deck {
   @override
   String toString() {
     return cards.toString();
+  }
+
+  shuffle() {
+    cards.shuffle();
   }
 }
 
