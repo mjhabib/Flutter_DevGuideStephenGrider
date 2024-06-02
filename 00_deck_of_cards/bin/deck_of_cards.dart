@@ -1,7 +1,7 @@
 void main() {
   var deck = Deck();
   deck.shuffle();
-  print(deck);
+  print(deck.cardWithSuit('Spades'));
   // anytime we want to print out an instance of a class, if we call the toString function, we can print out any custom message we want
 }
 
@@ -26,6 +26,13 @@ class Deck {
 
   shuffle() {
     cards.shuffle();
+  }
+
+  cardWithSuit(String suit) {
+    // return cards.where((card) {
+    //   return card.suit == suit;
+    // });
+    return cards.where((card) => card.suit == suit);
   }
 }
 
