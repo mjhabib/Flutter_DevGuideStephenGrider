@@ -2,14 +2,16 @@ void main() {
   var deck = Deck();
   deck.shuffle();
 
-  print('All the Spades: ');
+  print('Find all the Spades: ');
   print(deck.cardWithSuit('Spades'));
   // anytime we want to print out an instance of a class, if we call the toString function, we can print out any custom message we want
 
-  print('\n Deal hand: ');
+  print('\n Deal a new hand: ');
   print(deck.deal(5));
 
-  print('\n Remaining cards: ');
+  print(deck.removeCard('Ace', 'Clubs'));
+
+  print('\n Remaining minus "Ace of Clubs": ');
   print(deck.cards);
 }
 
@@ -49,6 +51,12 @@ class Deck {
     cards = cards.sublist(handSize);
     // that's why we need to call the sublist again, from handSize to 'end', so we can remove our 'hand' from the original list
     return hand;
+  }
+
+  removeCard(String rank, String suit) {
+    return cards.removeWhere((card) {
+      return '${card.rank}of${card.suit}' == '${rank}of$suit';
+    });
   }
 }
 
