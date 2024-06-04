@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_stateful/screens/mixins/validation_mixin.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -7,7 +8,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
   final formKey = GlobalKey<FormState>();
   // this GlobalKey allow us to reference any methods/properties associated with it, like form validation
   String? mail;
@@ -36,14 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
       keyboardType: TextInputType.emailAddress,
       decoration: const InputDecoration(
           labelText: 'Email: ', hintText: 'mail@test.com'),
-      validator: (value) {
-        if (value != null) {
-          if (!value.contains('@')) {
-            return 'Please enter a valid email';
-          }
-        }
-        return null;
-      },
+      validator: validateEmail,
       onSaved: (newMail) {
         mail = newMail;
       },
@@ -55,14 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
       obscureText: true,
       decoration:
           const InputDecoration(labelText: 'Password: ', hintText: '******'),
-      validator: (value) {
-        if (value != null) {
-          if (value.length < 6) {
-            return 'Password must be at least 6 characters';
-          }
-        }
-        return null;
-      },
+      validator: validatePassword,
       onSaved: (newPass) {
         pass = newPass;
       },
@@ -75,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
             print('Saved $mail and $pass.');
+            formKey.currentState!.reset();
           }
         },
         child: const Text('Submit'));
