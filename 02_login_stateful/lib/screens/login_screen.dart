@@ -10,6 +10,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   // this GlobalKey allow us to reference any methods/properties associated with it, like form validation
+  String? mail;
+  String? pass;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,9 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         return null;
       },
+      onSaved: (newMail) {
+        mail = newMail;
+      },
     );
   }
 
@@ -58,13 +63,19 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         return null;
       },
+      onSaved: (newPass) {
+        pass = newPass;
+      },
     );
   }
 
   Widget submitButton() {
     return ElevatedButton(
         onPressed: () {
-          formKey.currentState?.validate();
+          if (formKey.currentState!.validate()) {
+            formKey.currentState!.save();
+            print('Saved $mail and $pass.');
+          }
         },
         child: const Text('Submit'));
   }
