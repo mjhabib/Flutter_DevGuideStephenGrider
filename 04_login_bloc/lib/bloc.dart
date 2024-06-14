@@ -23,3 +23,6 @@ class Bloc with ValidationMixin {
     _passController.close();
   }
 }
+
+// Apply BLoC to our project using "Single Global Instance" method
+final bloc = Bloc();
