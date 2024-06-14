@@ -24,5 +24,5 @@ class Bloc with ValidationMixin {
   }
 }
 
-// Apply BLoC to our project using "Single Global Instance" method
-final bloc = Bloc();
+// Apply BLoC to our project using "Single Global Instance" method (might be better for small apps)
+// final bloc = Bloc();
