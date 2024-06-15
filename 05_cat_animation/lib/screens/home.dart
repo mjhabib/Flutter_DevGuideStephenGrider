@@ -20,11 +20,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     super.initState();
     // initState: Assign these values when we first initialized the app
 
-    catController =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+    catController = AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
     // this: Refers to our current Ticker
 
-    catAnimation = Tween(begin: 0.0, end: 100.0)
+    catAnimation = Tween(begin: -35.0, end: -80.0)
         .animate(CurvedAnimation(parent: catController, curve: Curves.easeIn));
     // Tween: Describes the range of the animated span
   }
@@ -37,9 +37,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         title: const Text('Cat Animation!'),
       ),
       body: GestureDetector(
-        onTap: onTap,
-        child: buildAnimation(),
-      ),
+          onTap: onTap,
+          child: Center(
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                buildCatAnimation(),
+                buildBox(),
+              ],
+            ),
+          )),
     );
   }
 
@@ -53,17 +60,30 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     }
   }
 
-  Widget buildAnimation() {
+  Widget buildCatAnimation() {
     return AnimatedBuilder(
       animation: catAnimation,
       builder: (context, child) {
-        return Container(
-          margin: EdgeInsets.only(top: catAnimation.value),
-          child: child,
-        );
+        // Workaround type error
+        final ch = child ??
+            Container(
+              child: child,
+            );
+        // return Container(
+        // margin: EdgeInsets.only(top: catAnimation.value),
+        return Positioned(
+            top: catAnimation.value, right: 0.0, left: 0.0, child: ch);
       },
       child: const Cat(),
       // Sometimes we don't want to re-create widgets over and over (creating an expensive widget 60 times/s makes our app heavy), so we define an instance of that widget one time as a child, and then we use it in our AnimatedBuilder
+    );
+  }
+
+  Widget buildBox() {
+    return Container(
+      width: 200,
+      height: 200,
+      color: Colors.brown,
     );
   }
 }

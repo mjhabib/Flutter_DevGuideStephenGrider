@@ -1,7 +1,10 @@
+// import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 import 'screens/home.dart';
 
 void main() {
+  // Show layout lines for debugging
+  // debugPaintSizeEnabled = true;
   runApp(const MainApp());
 }
 
