@@ -8,7 +8,29 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with TickerProviderStateMixin {
+// Ticker: Designed to get notified whenever Flutter's engine is about to draw a new frame (refresh rate of our animations = 60 fps)
+  late Animation<double> catAnimation;
+  // Animation: Records the current value of the property being animated (running, stopped, etc.)
+  late AnimationController catController;
+  // Controller: Starts, Stops, Restarts the animation during an specified time
+
+  @override
+  void initState() {
+    super.initState();
+    // initState: Assign these values when we first initialized the app
+
+    catController =
+        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+    // this: Refers to our current Ticker
+
+    catAnimation = Tween(begin: 0.0, end: 100.0)
+        .animate(CurvedAnimation(parent: catController, curve: Curves.easeIn));
+    // Tween: Describes the range of the animated span
+
+    catController.forward(); // Start the animation
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +45,16 @@ class _HomeState extends State<Home> {
   }
 
   Widget buildAnimation() {
-    return const Cat();
+    return AnimatedBuilder(
+      animation: catAnimation,
+      builder: (context, child) {
+        return Container(
+          margin: EdgeInsets.only(top: catAnimation.value),
+          child: child,
+        );
+      },
+      child: const Cat(),
+      // Sometimes we don't want to re-create widgets over and over (creating an expensive widget 60 times/s makes our app heavy), so we define an instance of that widget one time as a child, and then we use it in our AnimatedBuilder
+    );
   }
 }
