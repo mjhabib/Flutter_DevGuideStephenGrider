@@ -1,5 +1,6 @@
 import 'package:cat_animation/widgets/cat.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -44,6 +45,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               children: [
                 buildCatAnimation(),
                 buildBox(),
+                buildLeftFlap(),
+                buildRightFlap(),
               ],
             ),
           )),
@@ -84,6 +87,34 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       width: 200,
       height: 200,
       color: Colors.brown,
+    );
+  }
+
+  Widget buildLeftFlap() {
+    return Transform.rotate(
+      alignment: Alignment.topLeft, // define the center point of rotation
+      angle: pi / 8, // math.pi = rotate by radians
+      child: Container(
+        width: 10,
+        height: 125,
+        color: Colors.brown,
+      ),
+    );
+  }
+
+  Widget buildRightFlap() {
+    return Positioned(
+      right: 0.0,
+      top: 4,
+      child: Transform.rotate(
+        angle: pi / -8,
+        alignment: Alignment.topLeft,
+        child: Container(
+          width: 10,
+          height: 125,
+          color: Colors.brown,
+        ),
+      ),
     );
   }
 }
