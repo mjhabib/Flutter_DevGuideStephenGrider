@@ -27,8 +27,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     catAnimation = Tween(begin: 0.0, end: 100.0)
         .animate(CurvedAnimation(parent: catController, curve: Curves.easeIn));
     // Tween: Describes the range of the animated span
-
-    catController.forward(); // Start the animation
   }
 
   @override
@@ -38,10 +36,21 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         backgroundColor: Colors.blueAccent,
         title: const Text('Cat Animation!'),
       ),
-      body: Center(
+      body: GestureDetector(
+        onTap: onTap,
         child: buildAnimation(),
       ),
     );
+  }
+
+  // Start/Re-start the animation
+  onTap() {
+    if (catController.status == AnimationStatus.completed) {
+      catController.reverse();
+      // } else if (catController.status == AnimationStatus.dismissed) {
+    } else {
+      catController.forward();
+    }
   }
 
   Widget buildAnimation() {
