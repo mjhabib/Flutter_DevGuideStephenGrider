@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' show Client;
 import 'package:news_api/models/item_model.dart';
@@ -8,14 +9,15 @@ const _endpoint = 'https://hacker-news.firebaseio.com/v0';
 class NewsApiProvider {
   Client client = Client();
 
-  fetchTopIds() async {
+  Future<List<int>> fetchTopIds() async {
     final response = await client.get(Uri.parse('$_endpoint/topstories.json'));
 
     final ids = json.decode(response.body);
-    return ids;
+    return ids.cast<int>();
+    // cast: to prevent type error, we tell Dart the type of this list we are returning
   }
 
-  fetchItem(int id) async {
+  Future<ItemModel> fetchItem(int id) async {
     final response = await client.get(Uri.parse('$_endpoint/item/$id.json'));
 
     final item = json.decode(response.body);
