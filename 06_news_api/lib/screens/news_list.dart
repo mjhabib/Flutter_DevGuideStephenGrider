@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../blocs/stories_provider.dart';
+import '../widgets/news_list_tile.dart';
+import '../widgets/refresh.dart';
 
 class NewsList extends StatelessWidget {
   const NewsList({super.key});
@@ -7,9 +9,6 @@ class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = StoriesProvider.of(context);
-
-    // Temporary for test:
-    bloc.fetchTopIds();
 
     return Scaffold(
       appBar: AppBar(
@@ -22,18 +21,26 @@ class NewsList extends StatelessWidget {
 
   Widget buildList(StoriesBloc bloc) {
     return StreamBuilder(
-        stream: bloc.topIds,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Text('No data yet!');
-          }
+      stream: bloc.topIds,
+      builder: (context, AsyncSnapshot<List<int>> snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-          return ListView.builder(
-              itemCount: snapshot.data?.length,
-              itemBuilder: (context, index) {
-                return Text("${snapshot.data?[index]}");
-              });
-        });
+        return Refresh(
+          child: ListView.builder(
+            itemCount: snapshot.data?.length,
+            itemBuilder: (context, index) {
+              bloc.fetchItem(snapshot.data![index]);
+
+              return NewsListTile(
+                itemId: snapshot.data![index],
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   // in this example, if we have 1000 items to fetch, our ListView.builder is gonna show only as many items as it can (7 items) on screen after the Future resolvers (2 sec). If we scroll down, it'll fetch more. This is a useful feature because our app is not gonna have a bad performance and wait to fetch all 1000 items at once.
