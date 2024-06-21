@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '/blocs/stories_bloc.dart';
+import 'stories_bloc.dart';
+export 'stories_bloc.dart';
+// this export helps us to have access to the type StoriesBloc, when we import StoriesProvider but we don't wanna import StoriesBloc!
 
 class StoriesProvider extends InheritedWidget {
   late final StoriesBloc bloc;
@@ -7,8 +9,10 @@ class StoriesProvider extends InheritedWidget {
   StoriesProvider({super.key, required super.child}) : bloc = StoriesBloc();
 
   @override
-  bool updateShouldNotify(_) => true;
+  bool updateShouldNotify(InheritedWidget oldWidget) => true;
+
   static StoriesBloc of(BuildContext context) {
-    return (context.getInheritedWidgetOfExactType() as StoriesProvider).bloc;
+    return (context.dependOnInheritedWidgetOfExactType<StoriesProvider>())!
+        .bloc;
   }
 }

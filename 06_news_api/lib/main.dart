@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'blocs/stories_provider.dart';
 import 'screens/news_list.dart';
 
 void main() {
@@ -10,9 +11,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'News',
-      home: NewsList(),
+    return StoriesProvider(
+      child: const MaterialApp(
+        title: 'News',
+        home: NewsList(),
+      ),
     );
   }
 }
