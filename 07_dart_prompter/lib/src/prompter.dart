@@ -9,10 +9,7 @@ class Prompter {
   // Terminal terminal = Terminal();
 
   bool askBinary(String prompt) {
-    _terminal.clearScreen();
-    _terminal.printPrompt('$prompt (y/n)?');
-
-    final input = _terminal.collectInput();
+    final input = _ask('$prompt (y/n)? ', []);
     return input!.contains('y');
   }
 
@@ -21,19 +18,20 @@ class Prompter {
 
     // if I define my Terminal here, every time I call the ask method it's gonna create an instance of that and later on throw it away, which means the waste of resources, that's why we define the Terminal instance outside of our class or method. If we define it inside our class, by calling the class each time, we're gonna create multiple instance of that Terminal which we don't need.
 
-    _terminal.printPrompt(prompt);
-    _terminal.printOptions(options);
-
-    final input = _terminal.collectInput();
+    final input = _ask(prompt, options);
 
     try {
-      _terminal.clearScreen();
-      _terminal.printPrompt('You choose: ');
       return options[int.parse(input!)].value;
     } catch (e) {
-      _terminal.clearScreen();
       _terminal.printPrompt('You entered an invalid input. Try again! \n');
       return askMultiple(prompt, options);
     }
+  }
+
+  _ask(String prompt, List<Option> options) {
+    _terminal.clearScreen();
+    _terminal.printPrompt(prompt);
+    _terminal.printOptions(options);
+    return _terminal.collectInput();
   }
 }
