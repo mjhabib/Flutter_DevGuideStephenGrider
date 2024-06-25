@@ -10,8 +10,11 @@ void main() {
   final options = [Option('I want red', '#f00'), Option('I want blue', '#00f')];
   final prompt = 'This is my question?';
 
-  final usersPick = prompter.ask(prompt, options);
+  final usersPick = prompter.askMultiple(prompt, options);
   print(usersPick);
+
+  final pickBinary = prompter.askBinary('Do you wanna build a snowman');
+  print(pickBinary);
 }
 
 
