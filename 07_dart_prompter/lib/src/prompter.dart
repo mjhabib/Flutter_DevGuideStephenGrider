@@ -23,7 +23,6 @@ class Prompter {
     try {
       return options[int.parse(input!)].value;
     } catch (e) {
-      _terminal.printPrompt('You entered an invalid input. Try again! \n');
       return askMultiple(prompt, options);
     }
   }
