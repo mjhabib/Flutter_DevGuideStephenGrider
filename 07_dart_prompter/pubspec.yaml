@@ -1,6 +1,7 @@
 name: dart_prompter_mj
 description: Library to create CLI wizards
 version: 1.0.0
+homepage: https://github.com/mjhabib/Flutter_DevGuideStephenGrider/tree/main/07_dart_prompter
 
 environment:
   sdk: ^3.4.3
@@ -10,3 +11,5 @@ dependencies:
 dev_dependencies:
   lints: ^3.0.0
   test: ^1.24.0
+# dart pub publish --dry-run
+# dart pub publish
