@@ -6,6 +6,7 @@ environment:
   sdk: ^3.4.3
 
 dependencies:
+  dart_prompter_mj: ^1.0.0
 
 dev_dependencies:
   lints: ^3.0.0

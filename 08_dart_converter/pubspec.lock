@@ -78,6 +78,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  dart_prompter_mj:
+    dependency: "direct main"
+    description:
+      name: dart_prompter_mj
+      sha256: "0ce6cc1134b9d8e2e909d3d8bb869b31b513c3f76af8aed70c7cecdea8100e70"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   file:
     dependency: transitive
     description:
