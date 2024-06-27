@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dart_converter/src/converter.dart';
 import 'package:dart_prompter_mj/dart_prompter_mj.dart';
 
 void main() {
@@ -12,6 +13,9 @@ void main() {
     final format =
         prompter.askMultiple('Select a format: ', buildFormatOptions());
     final file = prompter.askMultiple('Select a file: ', buildFileOptions());
+    final newPath = convertImage(file, format);
+
+    prompter.askBinary('Is this your file: $newPath');
   }
 }
 
